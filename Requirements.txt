@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Project Title - " Hospital Management System "
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Python Version - 3.8.1
+* Django Version - 3.0.2
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Names of any other packages used and imported :-
+
+ 1) 'os' - For storing files
+ 2) 're' - For regular expression
+ 3) 'FileSystemStorage' - For file handling and storage
+ 4) 'Q' - For filtering queries
+ 5) 'SessionStore' - For storing the state of a client
+ 6) Models from the Apps - Doctor and Patient
+ 7) 'render' - For combining a given template with a given context dictionary
+ 8) 'csrf' - A middleware template which protects from cross site request forgery
+ 9) 'HttpResponseRedirect' - To read and right from html
+10) 'render_to_response' - To render the resulting web page
+11) 'reverse' - It is used such that if we change the url in future then we can still reference that url
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* List of Requirements implemented :-
+
+R.1 : Login Functionality
+        R.1.1 : System allows user to enter Username and Password for authentication
+        R.1.2 : System authenticates the user and generates failure message for invalid credentials
+        R.1.3 : System shows a link to logout if user has logged into the System
+
+R.2 : Create New User Account
+        R.2.1 : System allows a new user to fill up Registration Form and create it's new account
+
+R.3 : Patient's Functionality
+        R.3.1 : Create an appointment with a doctor by providing Chief Complaint and it's Description
+        R.3.2 : Cancel a "pending" appointment with the doctor
+        R.3.3 : View "confirmed" appointment with the doctor
+        R.3.4 : Delete appointments "cancelled" by the doctor
+        R.3.5 : View "checked" appointments of his/her past medical history
+
+R.4 : Doctor's Functionality
+        R.4.1 : Based on Patient's complaint, a Doctor can Schedule appointment with that patient by giving date and time.                                      Otherwise, he may Cancel the appointment request.
+        R.4.2 : View his/her "confirmed" appointments with patients
+        R.4.3 : View checked appointments of patients
+        R.4.4 : Cancel Patient's appointment if a patient doesn't arrived on that mentioned appointment date and time 
+        R.4.5 : Write Prescription to a patient's complaint
+ 
+R.5 : View User Profile
+        R.5.1 : System allows each User to View his own profile
+        R.5.2 : System allows Users to Update "Profile Picture", "Phone Number" and "Address" fields
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
