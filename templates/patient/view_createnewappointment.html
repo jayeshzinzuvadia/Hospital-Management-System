@@ -1,0 +1,123 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <title>Create New Appointments</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!--link href="{%static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{%static 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %}"-->
+        <link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{%static 'js/style.css' %}">
+        <script>
+            function setAppointment(count){
+                var chief_complaint = document.getElementById("chief_complaint"+count);
+                var setbutton = document.getElementById("setbutton"+count);
+                var description = document.getElementById("description"+count);
+                var submitbutton = document.getElementById("submitbutton"+count);
+
+                var check=chief_complaint.style.display;
+                var value="none";
+                setbutton.innerHTML="Set Appointment";
+                setbutton.className="btn btn-lg btn-success";
+                if(check.includes("none",0))
+                {
+                    value="";
+                    setbutton.innerHTML="Cancel";
+                    setbutton.className="btn btn-lg btn-danger align-content-md-end";
+                }
+                chief_complaint.style.display=value;
+                description.style.display=value;
+                submitbutton.style.display=value;
+            }
+        </script>
+    </head>
+    <body>
+        {% include 'patient/_header.html' %}
+        <h2 class="mb-4" style="color: #ff0cd0">Select Doctor to Create New Appointment</h2>
+<!---------------------------------------------------------------------------------------->
+        {%for doctor in doctor_list%}
+        <!--form action="{}% url patient : 'createnewappointment' %{}" method="POST"-->
+        <form action="{% url 'patient:readnewappointment' %}" method="POST">
+            {%csrf_token%}
+            <div class="row" style="padding: 4px">
+                <div class="col-sm-8">
+                    <div class="card" style="max-width:800px">
+                        <div class="card-header" style="padding:6px 16px 6px 20px">
+                            <h4>Set Appointment With <b>Dr. {{doctor.name}}</b></h4>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Type of Doctor</strong> : {{doctor.typeofdoctor}}
+                                    </div>
+                                    <div class="col">
+                                        <strong>Degree</strong> : {{doctor.degree}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Phone Number</strong> : {{doctor.phoneno}}
+                                    </div>
+                                    <div class="col">
+                                        <strong>Gender</strong> : {{doctor.gender}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Hospital Address</strong> : {{doctor.hospital_address}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="chief_complaint{{forloop.counter}}" class="list-group" style="display: none">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Chief Complaint</strong> :
+                                        <input type="text" class="form-control" name="chief_complaint"required>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul id="description{{forloop.counter}}" class="list-group" style="display: none">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Description</strong> :
+                                        <input type="text" class="form-control" name="description" required>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="hidden" name="d_email" value="{{doctor.email_id}}">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div id="submitbutton{{forloop.counter}}" class="col" style="display: none">
+                                        <button type="submit" class="btn btn-lg btn-success" name="submit">Submit</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="setbutton{{forloop.counter}}" onclick="setAppointment({{forloop.counter}})" type="button" class="btn btn-lg btn-success" name="setbutton">Set Appointment</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {%endfor%}
+<!---------------------------------------------------------------------------------------->
+    {% include 'patient/_footer.html'%}
+    </body>
+</html>

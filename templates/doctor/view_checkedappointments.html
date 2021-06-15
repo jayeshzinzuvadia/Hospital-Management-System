@@ -1,0 +1,43 @@
+{%load static%}
+<html lang="en">
+    <head>
+        <title>Checked Appointments</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'js/style.css'%}">
+    </head>
+    <body>
+        {% include 'doctor/_header.html' %}
+        <h2 class="mb-4">My Checked Appointments</h2>
+<!---------------------------------------------------------------------------------------->
+        {%for appointment in checked_appointment_list%}
+                <div class="row" style="padding: 4px">
+                    <div class="col-sm-8">
+                        <div class="card" style="max-width:800px">
+                            <div class="card-header" style="padding:6px 16px 6px 20px">
+                                <h4>Appointment With 
+                                    <b>
+                                    {%if appointment.p_email.gender == 'male'%}Mr. {%endif%}
+                                    {%if appointment.p_email.gender == 'female'%}Miss. {%endif%}
+                                      {{appointment.p_email.name}}
+                                    </b>
+                                </h4>
+                                <small  style="font-size: larger;">
+                                   on {{appointment.appointmentdate|date:"D, d M,Y \\a\\t h:i A"}}
+                                </small>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Chief Complaint</strong> : {{appointment.chief_complaint}}</li>
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Prescription</strong> : {{appointment.prescription}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        {%endfor%}
+<!---------------------------------------------------------------------------------------->
+        {% include 'doctor/_footer.html' %}
+    </body>
+</html>

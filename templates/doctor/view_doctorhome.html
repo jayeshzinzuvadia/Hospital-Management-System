@@ -1,0 +1,64 @@
+{%load static%}
+<html lang="en">
+    <head>
+        <title>Doctor Home Page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'js/style.css'%}">
+    </head>
+    <body>
+        {% include 'doctor/_header.html' %}
+        <h2 class="mb-4">My Appointments</h2>
+        
+<!---------------------------------------------------------------------------------------->
+        {%for appointment in confirmed_appointment_list%}
+        <form action="{% url 'doctor:writeprescription' %}" method="POST">
+        {% csrf_token %}
+            <div class="row" style="padding: 4px">
+                <div class="col-sm-8">
+                    <div class="card" style="max-width:800px">
+                        <div class="card-header" style="padding:6px 16px 6px 20px">
+                            <h4>Appointment with
+                                <b>
+                                    {%if appointment.p_email.gender == 'male'%}Mr. {%endif%}
+                                    {%if appointment.p_email.gender == 'female'%}Miss. {%endif%}
+                                      {{appointment.p_email.name}}
+                                </b>
+                            </h4>
+                            <small style="font-size: larger;">
+                                on {{appointment.appointmentdate|date:"D, d M,Y \\a\\t h:i A"}}
+                            </small>
+                        </div>
+                        <input type="hidden" name="case_id" value="{{appointment.case_id}}">
+                        <ul class="list-group">
+                            <li class="list-group-item"  style="padding:6px 16px 6px 20px">
+                                <strong>Chief Complaint</strong> : {{appointment.chief_complaint}}                                         
+                            </li>
+                            <li class="list-group-item"  style="padding:6px 16px 6px 20px"><strong>Description</strong> : {{appointment.description}}</li>
+                            <li class="list-group-item"  style="padding:6px 16px 6px 20px"><strong>Prescription</strong> : 
+                                <input type="text" class="form-control" name="prescription" required="">
+                            </li>
+                            <li class="list-group-item"  style="padding:6px 16px 6px 20px">    
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="submit" class="form-control btn-success" name="submit" value="Submit">
+                                    </div>
+                                    <div class="col">
+                                        <input type="reset" class="form-control btn-warning" name="reset" value="Reset">
+                                    </div>
+                                    <div class="col">
+                                        <a href="{%url 'doctor:cancelappointments' case_id=appointment.case_id %}" class="btn btn-danger" role="button">Cancel Appointment</a>
+                                    </div>
+                                </div>
+                            </li>    
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+        </form>
+<!---------------------------------------------------------------------------------------->
+        {% include 'doctor/_footer.html' %}
+    </body>
+</html>

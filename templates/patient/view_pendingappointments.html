@@ -1,0 +1,69 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <title>Pending Appointments</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'js/style.css' %}">
+    </head>
+    <body>
+        {% include 'patient/_header.html' %}
+        <h2 class="mb-4" style="color: #4d17ca">Pending Appointments</h2>
+<!---------------------------------------------------------------------------------------->
+        {%for appointment in pending_appointment_list%}
+            {%if appointment.status == "pending"%}
+            <form action="{% url 'patient:cancelappointments' %}" method="post">
+                {% csrf_token %}
+                <div class="row" style="padding: 4px">
+                    <div class="col-sm-8">
+                        <div class="card" style="max-width:800px">
+                            <div class="card-header" style="padding:6px 16px 6px 20px">
+                                <h4>Appointment With
+                                    <b>Dr. {{appointment.d_email.name}}</b>
+                                    <button type="submit" style="float: right" class="btn btn-lg btn-danger align-content-md-end" name="cancel" value="{{appointment.case_id}}">Cancel Appointment</button>
+                                </h4>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Chief Complaint</strong> : {{appointment.chief_complaint}}</li>
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Description</strong> : {{appointment.description}} </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {%endif%}
+        {%endfor%}
+<!---------------------------------------------------------------------------------------->
+        <h2 class="mb-4" style="color: #ff0a0e;padding: 16px 2px 0px 2px">Cancelled Appointments</h2>
+        {%for appointment in pending_appointment_list%}
+            {%if appointment.status == "cancelled"%}
+            <form action="{%url 'patient:cancelappointments' %}" method="post">
+                {% csrf_token %}
+                <div class="row" style="padding: 4px">
+                    <div class="col-sm-8">
+                        <div class="card" style="max-width:800px">
+                            <div class="card-header" style="padding:6px 16px 6px 20px">
+                                <h4>Appointment With
+                                    <b>Dr. {{appointment.d_email.name}}</b>
+                                    <button type="submit" style="float: right" class="btn btn-lg btn-danger align-content-md-end" name="cancel" value="{{appointment.case_id}}">Delete Appointment</button>
+                                </h4>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Chief Complaint</strong> : {{appointment.chief_complaint}}</li>
+                                <li class="list-group-item" style="padding:6px 16px 6px 20px">
+                                    <strong>Description</strong> : {{appointment.description}} </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {%endif%}
+        {%endfor%}
+<!---------------------------------------------------------------------------------------->
+        {% include 'patient/_footer.html' %}
+    </body>
+</html>

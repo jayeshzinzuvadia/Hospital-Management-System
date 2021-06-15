@@ -1,0 +1,98 @@
+{%load static%}
+<html lang="en">
+    <head>
+        <title>Schedule Appointments</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'js/style.css'%}">
+        <script>
+            function setAppointment(count) {
+                var chief_complaint = document.getElementById("chief_complaint" + count);
+                var setbutton = document.getElementById("setbutton" + count);
+                var submitbutton = document.getElementById("submitbutton" + count);
+
+                var check = chief_complaint.style.display;
+                var value = "none";
+                setbutton.innerHTML = "Set Time";
+                if (check.includes("none", 0))
+                {
+                    value = "";
+                    setbutton.innerHTML = "Cancel";
+                }
+                chief_complaint.style.display = value;
+                submitbutton.style.display = value;
+            }
+        </script>
+    </head>
+    <body>
+        {% include 'doctor/_header.html' %}
+        <h2 class="mb-4" style="color: #ff0cd0">Schedule Arrival Appointments</h2>
+        <!---------------------------------------------------------------------------------------->
+        {%for appointment in patient_list%}
+            <form action="{% url 'doctor:writeappointment' %}" method="POST">
+                {% csrf_token %}
+                <div class="row" style="padding: 4px">
+                    <div class="col-sm-8">
+                        <div class="card" style="max-width:800px">
+                            <div class="card-header" style="padding:6px 16px 6px 20px">
+                                <h4>Set Appointment With 
+                                    <b>
+                                        {%if appointment.p_email.gender == 'male'%}Mr. {%endif%}
+                                        {%if appointment.p_email.gender == 'female'%}Miss. {%endif%}
+                                        {{appointment.p_email.name}}
+                                        <button type="submit" style="float: right" class="btn btn-lg btn-danger align-content-md-end" name="reject" value="hi">Reject</button>
+                                    </b>
+                                </h4>
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>Chief Complaint : </strong> : {{appointment.chief_complaint}}
+                                </li>    
+                            </ul>
+                            <input type="hidden" name="case_id" value="{{appointment.case_id}}">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>Description : </strong> : {{appointment.description}}
+                                </li>   
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>Phone no : </strong> : {{appointment.p_email.phoneno}}
+                                </li> 
+                            </ul>
+                            <ul id="chief_complaint{{forloop.counter}}" class="list-group" style="display: none">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col">
+                                            <strong>Date</strong> :
+                                            <input type="date" class="form-control" name="date">
+                                        </div>
+                                        <div class="col">
+                                            <strong>Time</strong> :
+                                            <input type="time" class="form-control" name="time">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div id="submitbutton{{forloop.counter}}" class="col" style="display: none">
+                                            <button type="submit" class="btn btn-lg btn-success" name="submit">Submit</button>
+                                        </div>
+                                        <div class="col">
+                                            <button id="setbutton{{forloop.counter}}" onclick="setAppointment({{forloop.counter}})" type="button" class="btn btn-lg btn-success" name="setbutton">Set Time</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {%endfor%}
+        <!---------------------------------------------------------------------------------------->
+        {% include 'doctor/_footer.html' %}
+    </body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="p-4 pt-5" style="position: fixed;">
+            <a href="#" class="img logo rounded-circle mb-5" 
+            style="background-image: url({% static doctor_info.img_url %});"></a>
+            <h3 style="color: #f0ca21">Welcome {{doctor_info.name.split.0}} </h3>
+            <ul class="list-unstyled components mb-5">
+                <li class="nav-item "><a href="{% url 'doctor:doctorhome'%}" class="">Home</a></li>
+                <li class="nav-item"><a href="{% url 'doctor:scheduleappointments'%}">Schedule Appointments</a></li>
+                <li class="nav-item"><a href="{% url 'doctor:checkedappointments'%}">Checked Appointments</a></li>
+                <li class="nav-item"><a href="{% url 'doctor:doctorprofile'%}">View Profile</a></li>
+                <li class="nav-item"><a href="{% url 'loginApp:logout'%}">Log Out</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="content" class="p-4 p-md-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-dark">
+                    <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+            </div>
+        </nav>
